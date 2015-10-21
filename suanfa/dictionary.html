@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>dictionary</title>
+</head>
+<body>
+	<script>
+		function Dictionary(){
+			this.add = add;
+			this.dataStore = new Array();
+			this.find = find;
+			this.remove = remove;
+			this.showAll = showAll;
+			this.count = count;
+			this.sort = sort;
+			this.clear = clear;
+		}
+
+		function sort(){
+			var that = this;
+			var keys = Object.keys(that.dataStore).sort();
+			for(var i=0; i<keys.length; i++){
+				console.log(keys[i] + '->' + that.dataStore[keys[i]]);
+			}
+		}
+		
+
+		function add(key,value){
+			this.dataStore[key] = value;
+		}
+
+		function find(key){
+			console.log(this.dataStore[key])
+			return this.dataStore[key];
+		}
+
+		function remove(key){
+			delete this.dataStore[key];
+		}
+
+		function showAll(){
+			var keys = Object.keys(this.dataStore);
+			for(var key in keys){
+				console.log(keys[key] + '->' + this.dataStore[keys[key]]);
+			}
+		}
+
+		function count(){
+			var n = 0;
+			for(var key in Object.keys(this.dataStore)){
+				n++;
+			}
+			return n;
+		}
+
+		function clear(){
+			var keys = Object.keys(this.dataStore);
+			for(var key in keys){
+				delete this.dataStore[keys[key]];
+			}
+		}
+
+		var book = new Dictionary;
+
+		book.add('abc','123');
+		book.add('cde','456');
+		book.add('efg','789');
+		book.count();
+		book.showAll();
+
+		var word = new Dictionary, text = "the brown fox jumped over the blue fox the end", arr1 = text.split(' ');
+		for(var i=0; i < arr1.length; i++){
+			if(word.find(arr1[i])){
+				word.add(arr1[i],(1+word.find(arr1[i])))
+			}else{
+				word.add(arr1[i],1);
+			}
+
+		}
+		// word.showAll();
+		word.sort();
+
+	</script>
+</body>
+</html>

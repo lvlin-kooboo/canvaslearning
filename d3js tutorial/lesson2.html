@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>d3</title>
+	<script src="d3min.js"></script>
+	<style>
+		
+	</style>
+</head>
+<body>
+	<svg width="720" height="120">
+		<circle cx="40" cy="60" r="10"></circle>
+		<circle cx="80" cy="60" r="10"></circle>
+		<circle cx="120" cy="60" r="10"></circle>
+	</svg>
+	<script>
+		window.requestAnimateFrame = (function() {
+			return window.requestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame || 
+				function(callback) {
+					window.setTimeout(callback,1000);
+				}
+		})();
+		var circle = d3.selectAll('circle');
+		circle.style('fill','steelblue');
+		circle.attr('r',30);
+
+		function f(){
+			circle.attr('r', function(d,i) {
+				console.log(d+'_' + i)
+				return Math.random()*5;
+			});
+			requestAnimateFrame(f);
+		}
+		f()
+	</script>
+</body>
+</html>

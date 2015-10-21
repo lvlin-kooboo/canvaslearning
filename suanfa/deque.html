@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>deque</title>
+</head>
+<body>
+	<script>
+		function Deque(){
+			this.dataStore = [];
+			this.dequeueFront = dequeueFront;
+			this.dequeueBack = dequeueBack;
+			this.enqueueFront = enqueueFront;
+			this.enqueueBack = enqueueBack;
+			this.empty = empty;
+			this.toString = toString;
+		}
+
+		function enqueueFront(el){
+			this.dataStore.unshift(el);
+		}
+
+		function enqueueBack(el){
+			this.dataStore.push(el);
+		}
+
+
+		function dequeueFront(){
+			return this.dataStore.shift();
+		}
+
+		function dequeueBack(){
+			return this.dataStore.pop();
+		}
+
+		function empty(){
+			return this.dataStore > 0;
+		}
+
+		function toString(){
+			return this.dataStore.toString();
+		}
+
+		function isPara(word){
+			var d1 = new Deque(), d2 = new Deque;
+			for(var i=0; i<word.length; i++){
+				d1.enqueueFront(word[i]);
+				d2.enqueueBack(word[i]);
+			}
+			console.log(d1.toString() === d2.toString())
+			return d1.toString() === d2.toString()
+
+		}
+
+		isPara('abceba');
+	</script>
+</body>
+</html>

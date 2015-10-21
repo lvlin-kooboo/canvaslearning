@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>linked list</title>
+</head>
+<body>
+	<script>
+		function Node(el){
+			this.el = el;
+			this.next = null;
+		}
+		function LinkList(){
+			this.head = new Node('head');
+			this.find = find;
+			this.insert = insert;
+			this.display = display;
+		}
+
+		function find(el){
+			var head = this.head;
+
+			while(head.el!==el){
+				head = head.next;
+			}
+			return head;
+		}
+
+		function insert(el,refer){
+			var locate = this.find(refer);
+			var node = new Node(el);
+			if(locate){
+				node.next = locate.next;
+				locate.next = node;
+			}
+		}
+
+		function display(){
+			var head = this.head;
+			while(head.next !== null){
+				console.log(head.next.el);
+				head = head.next;
+			}
+		}
+
+		var cities = new LinkList();
+
+		cities.insert('beijing','head');
+		cities.insert('nanjing','beijing');
+		cities.insert('xijing','nanjing');
+		cities.display()
+		console.log()
+	</script>
+</body>
+</html>

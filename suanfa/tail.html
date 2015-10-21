@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>tail</title>
+</head>
+<body>
+	<div>请选中这里的部分文字。</div><div><input type="button" value="加粗" onclick="javascript :Bold();" /></div>   
+  
+<script  language="javascript">   
+	function MyObject(){
+		var data = 100;
+		this.getData = function(){return data;}
+		this.setData = function(v){data = v;}
+	}
+	(function(){
+		var class_data = 5;
+		this.getClassData = function(){
+			return class_data;
+		}
+		this.setClassData = function(v){
+			class_data = v;
+		}
+	}).call(MyObject.prototype);
+
+	var obj1 = new MyObject();
+	var obj2 = new MyObject();
+
+	obj1.setData(10);
+	console.log(obj2.getData());
+	obj1.setClassData(50);
+	console.log(obj2.getClassData());
+
+	function aFunc(){
+		function myFunc(){
+
+		}
+		return myFunc;
+	}
+
+	var f1 = aFunc();
+	var f2 = aFunc();
+	console.log(f1===f2)
+
+</script> 
+</body>
+</html>

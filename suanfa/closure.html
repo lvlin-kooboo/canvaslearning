@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>closure</title>
+</head>
+<body>
+	<script>
+		var checker;
+
+		function myFunc(){
+			if(checker){
+				checker();
+			}
+
+			console.log('do my func' + str);
+			var str = "test";
+
+			if(!checker){
+				checker = function(){
+					console.log('do check' + str);
+				}
+			}
+
+			return arguments.callee;
+		}
+
+		var t = myFunc();
+		t();
+		t();
+	</script>
+</body>
+</html>

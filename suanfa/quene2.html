@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>quene</title>
+</head>
+<body>
+	<script>
+
+	function Quene(){
+		this.dataStore = [];
+		this.enqueue = enqueue;
+		this.dequeue = dequeue;
+		this.front = front;
+		this.back = back;
+		this.empty = empty;
+	}
+
+	function enqueue(el){
+		this.dataStore.push(el);
+	}
+
+	function dequeue(){
+		return this.dataStore.shift();
+	}
+
+	function front(){
+		return this.dataStore[0];
+	}
+
+	function back(){
+		return this.dataStore[this.dataStore.length-1];
+	}
+	function empty(){
+		if(this.dataStore.length ==0){
+			return true;
+		}
+		return false;
+	}
+	</script>
+</body>
+</html>

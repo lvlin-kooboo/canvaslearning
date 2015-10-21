@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>ice</title>
+	<style type="text/css">
+	html,body{padding: 0;margin: 0;}
+	canvas{display: block;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script>
+	window.onload = function(){
+		var canvas = document.getElementById('canvas'),
+		context = canvas.getContext('2d');
+
+		canvas.height = document.documentElement.clientHeight;
+		canvas.width = document.documentElement.clientWidth;
+
+		var img = new Image();
+		img.onload = function(e) {
+			drawImg(this);
+		}
+		img.src = '../img/ice2.jpg';
+
+		function drawImg(a){
+			context.drawImage(a,0,0,canvas.width,canvas.height,0,0,canvas.width,canvas.height)
+			beat(a)
+		};
+		var lines = [];
+		function beat(e){
+			var datas = context.getImageData(0,0,canvas.width,canvas.height),
+			data = datas.data;
+			var x = canvas.width/2;
+			for(var i=-2; i < 2; i++){
+				for(var j=0; j < canvas.height; j+=6){
+					var d = data[(x+i+j*canvas.width)*4];
+					var l = new Line(canvas.width/2 +i, j, Math.random()*Math.PI, Math.random()*5+5, Math.random()*2+1,('rgba('+data[d]+','+data[d+1]+','+data[d+2]+','+(128)+')'));
+					lines.push(l);
+				}
+
+			}
+
+			animate()
+		}
+
+		function Line(x,y,a,d,w,c){
+			this.x = x;
+			this.y = y;
+			this.d= d;
+			this.w = w;
+			this.a = a;
+			this.dx = Math.sin(this.a)*this.d + this.x;
+			this.dy = Math.cos(this.a)*this.d + this.y;
+			this.c = c;
+		}
+
+		Line.prototype = {
+			constructor: Line,
+			paint: function(){
+				context.save();
+				context.beginPath();
+				context.lineWidth = this.w;
+				context.strokeStyle = 'rgba(180,170,155,100)';
+				context.moveTo(this.x-Math.random()*5,this.y-Math.random()*5);
+				context.lineTo(this.dx-Math.random()*5,this.dy-Math.random()*5);
+				context.stroke();
+				context.restore();
+			}
+		}
+		var last = 0;
+		function animate(){
+			var now = +new Date();
+			if(now - last>300){
+				for(var i=0; i < lines.length; i++){
+					lines[i].paint();
+				}
+			
+				last = now;
+			}
+				if("requestAnimationFrame" in window) {
+						requestAnimationFrame(animate);
+					}
+					else if("webkitRequestAnimationFrame" in window) {
+						webkitRequestAnimationFrame(animate);
+					}
+					else if("msRequestAnimationFrame" in window) {
+						msRequestAnimationFrame(animate);
+					}
+					else if("mozRequestAnimationFrame" in window){
+                        mozRequestAnimationFrame(animate);
+                    }
+			
+		}
+
+	}
+	</script>
+</body>
+</html>

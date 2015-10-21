@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>quene</title>
+</head>
+<body>
+	<script>
+		var a = [6,3,1,7,5,8,9,2,4];
+		function quene(a){
+			var d = [], l = a.length;
+			debugger
+			while(l--){
+				d.push(a.shift());
+				a.push(a.shift());
+			}
+			console.log(d.join(''))
+		}
+		quene(a)
+	</script>
+</body>
+</html>

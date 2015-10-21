@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>linked list</title>
+</head>
+<body>
+	<script>
+		function Node(el){
+			this.el = el;
+			this.next = null;
+		}
+		function LinkList(){
+			this.head = new Node('head');
+			this.head.next = this.head;
+			this.find = find;
+			this.insert = insert;
+			this.display = display;
+			this.remove = remove;
+			this.findPrevious = findPrevious;
+		}
+
+		function find(el){
+			var head = this.head;
+
+			while(head.el!==el){
+				head = head.next;
+			}
+			return head;
+		}
+
+		function insert(el,refer){
+			var locate = this.find(refer);
+			var node = new Node(el);
+			if(locate){
+				node.next = locate.next;
+				locate.next = node;
+			}
+		}
+
+		function findPrevious(el){
+			var curNode = this.head;
+			while(curNode.next.el !== el){
+				curNode = curNode.next;
+			}
+
+			return curNode;
+		}
+
+		function remove(el){
+			var curNode = this.findPrevious(el);
+			curNode.next = curNode.next.next;
+		}
+
+		function display(){
+			var head = this.head;
+			while(head.next !== null && head.next !== this.head){
+				console.log(head.next.el);
+				head = head.next;
+			}
+		}
+
+		// var cities = new LinkList();
+
+		// cities.insert('beijing','head');
+		// cities.insert('nanjing','beijing');
+		// cities.insert('xijing','nanjing');
+		// cities.insert('xijing1','xijing');
+		// cities.insert('xijing2','xijing1');
+		// cities.insert('xijing3','xijing2');
+		// cities.insert('xijing4','xijing3');
+		// cities.remove('xijing1');
+		// cities.display()
+		// console.log()
+
+		var n = 100, m = 4, a = [];
+		var person = new LinkList();
+		for(var i=1; i<=n; i++){
+			i == 1 ? person.insert(i,'head') : person.insert(i,i-1);
+		}
+		var curNode = person.head;
+		while(n >= m){
+
+			var i=1;
+			while(i<m){
+				curNode = curNode.next == person.head ? curNode.next.next: curNode.next;
+				i++;
+			}
+			curNode.next == person.head ? (person.head.next = person.head.next.next, curNode = person.head) : curNode.next = curNode.next.next;
+			// curNode = curNode.next;
+			// person.display();
+			n--;
+		}
+		person.display();
+		// while(){
+
+		// }
+	</script>
+</body>
+</html>

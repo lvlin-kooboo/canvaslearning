@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+	<head>
+		<title>JS1k, 1k demo submission - Here be dragons 2014</title>
+		<meta charset="utf-8" />
+		<style>
+         html, body { margin: 0; padding: 0; border: 0; }
+         #c { display: block; } /* kill scrollbars from hell */
+      </style>
+	</head>
+	<body>
+		<canvas id="c"></canvas>
+		<script>
+			var a = document.getElementsByTagName('canvas')[0];
+			var b = document.body;
+         var d = function(e){ 
+            return function(){ e.parentNode.removeChild(e); 
+            }; 
+          }(a);
+         // unprefix some popular vendor prefixed things (but stick to their original name)
+         var AudioContext =
+           window.AudioContext ||
+           window.webkitAudioContext;
+         var requestAnimationFrame =
+           window.requestAnimationFrame ||
+           window.mozRequestAnimationFrame ||
+           window.webkitRequestAnimationFrame ||
+           window.msRequestAnimationFrame ||
+           function(f){ setInterval(f, 1000/30); };
+         // stretch canvas to screen size (once, wont onresize!)
+         a.style.width = (a.width = innerWidth) + 'px';
+         a.style.height = (a.height = innerHeight) + 'px';
+
+         var c = a.getContext('2d');
+		</script>
+<script>
+_='gg.w$=gg,	NJ	Nmm.w$=mm;	J	qW$,rHe&,s=q/,t=z(Yq>r?zq:q/r)^ v(h,e,a){Kturn `(h-b)Yh-bZ(e-a)Ye-a))}(f=^(){c.save(h=,e=.1*hc@"#000";c,q,r!globalCompositeOpeX="l&er";_b=-ja;33>=b;b++)a=-4;35>=a;a++)_d=~~(|Y+h-h		+h/8UU4Z(Q.06*aZ256+Q.03*bZ+*+h-h,q,r+Q`a*a+b*b[8)[4[jn=4;1<n;n--){ps,ut;g,a*sp?p|:0)*tu?u*-e:0BpBu))}e=2E3!tXnsl(q/jz2!rot(2E3%]*2|d=0;d<12*];d+=]/48)p={x:(13d)-6V,y:(13Qd)-6QVQ},m,p.xTp.yT.8*s,.8*s!KstoK(KquestAnimaFXme(f)})()sin(l=k.cKRadialGXdienLN,16NNN0,0)"k@l;k		Math.=document.cKElemenL"canvas"l.addColorStop(128D.now([	,6411/6*d)[8Z.getContexL"2d"));v(a.fill,"rgba(.he&=64;k==window.inner32c.dXwImage(Y1-e)*cos(tionfor(=(n<<4)-d++d-n-+(0>ateRecL0,0,b!c.$idth&ight@Style=B),abs(J,1)"1KreLt(N,Q*T*z7jU,192	V)|+6XraY*(Z)+[)/]PI^func_var `sqrLj2,zr/|*e,';for(Y in $='|zj`_^][ZYXVUTQNLKJB@&$!	')with(_.split($[Y]))_=join(pop());eval(_)</script>
+	</body>
+</html>

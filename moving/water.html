@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Creating water flow effect using html5 canvas - Nibunan</title>
+    </head>
+    <body style="margin: 0px">
+        <canvas width="700" height="450" id="drawing-surface"></canvas>
+        <script type="text/javascript">
+
+        function Viewport() {
+            var me = this;
+            me.objects = [];
+            var canvas = document.getElementById("drawing-surface");
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.onresize = function() {
+                resizeCanvas();
+            }
+            var drawingSurface = document.getElementById("drawing-surface").getContext("2d");
+            var image = new Image();
+            image.src = "background.png";
+            image.onload = function() {
+                me.backgroundImage = image;
+                me.doPaint = true;
+            }
+            me.doPaint = true;
+
+            function drawBackgroundImage() {
+                if (me.backgroundImage) {
+                    drawingSurface.drawImage(me.backgroundImage, 0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            function drawObjects() {
+                for (var i = 0; i < me.objects.length; i++) {
+                    me.objects[i].paint(drawingSurface);
+                }
+            }
+            me.paintInit = function() {
+                me.doPaint = true;
+            }
+
+            function paint() {
+                me.paintInit();
+                if (me.doPaint) {
+                    drawBackgroundImage();
+                    drawObjects();
+                    me.doPaint = false;
+                }
+            }
+            var timer;
+            me.init = function() {
+                timer = setInterval(function() {
+                    paint();
+                }, 1000 / 30);
+            };
+            me.repaint = function() {
+                me.doPaint = true;
+            };
+            me.addObject = function(obj) {
+                me.objects.push(obj);
+            }
+        }
+
+         function WaterParticle() {
+             var me = this;
+             me.opacity = 5;
+             me.color = "rgb(250,250,250)";
+             me.reset = function() {
+                 me.wind = RandomFloat(200) - 50;
+                 me.speed = RandomFloat(5) + 2;
+                 me.radius = 100;
+                 me.colorfactor = 100;
+                 me.location = {
+                     x: window.innerWidth / 2,
+                     y: window.innerHeight / 2 - 20
+                 };
+             };
+             me.reset();
+             me.move = function() {
+                 if (me.location.x > window.innerWidth || me.location.x < 0 || me.location.y > window.innerHeight) {
+                     me.reset();
+                 }
+                 me.colorfactor += 255 / ((300 * 2) / me.speed);
+                 if (me.colorfactor > 254) {
+                     me.colorfactor = 100;
+                 }
+                 me.location.x += me.wind;
+                 me.location.y += me.speed;
+             };
+             me.paint = function(context) {
+                 me.move();
+                 context.beginPath();
+                 context.arc(me.location.x, me.location.y, me.radius, 0, 2 * Math.PI, false);
+                 context.fillStyle = me.color;
+                 context.globalAlpha = me.opacity / 255;
+                 context.fill();
+                 context.closePath();
+             };
+         }
+
+          function Wave() {
+              var me = this;
+              me.particles = [];
+              me.reset = function() {
+                  me.particles.splice(0, me.particles.length)
+                  for (var i = 0; i < 500; i++) {
+                      var p = new WaveParticle();
+                      me.particles.push(p);
+                  }
+              };
+              me.reset();
+              me.move = function() {
+
+              };
+              me.paint = function(context) {
+                  for (var i = 0; i < me.particles.length; i++) {
+                      me.particles[i].paint(context);
+                  }
+              };
+          }
+
+        function WaveParticle(source) {
+            var me = this;
+            me.color = "rgb(130,150,120)";
+            me.reset = function() {
+                me.opacity = 30;
+                me.wind = RandomFloat(30) - 15;
+                me.speed = RandomFloat(1);
+                me.size = {
+                    width: RandomFloat(200) + 100,
+                    height: RandomFloat(3) + 5
+                };
+                me.location = {
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2 - 120
+                };
+            };
+            me.reset();
+            me.move = function() {
+                if (me.location.y > window.innerWidth || me.location.x < 0 || me.location.x > window.innerWidth) {
+                    me.reset();
+                }
+                me.location.x += me.wind;
+                me.location.y += me.speed;
+            };
+            me.paint = function(context) {
+                me.move();
+                context.globalAlpha = me.opacity / 255;
+                context.fillStyle = me.color;
+                context.fillRect(me.location.x, me.location.y, me.size.width, me.size.height);
+            };
+        }
+
+        function Random(range) {
+        return Math.floor((Math.random() * range) + 1);
+        }
+        function RandomFloat(range) {
+        return (Math.random() * range) + 1;
+        }
+        var viewport = new Viewport()
+        var wave = new Wave();
+        viewport.addObject(wave)
+        for (var i = 0; i < 100; i++) {
+        var particlegroup = new WaterParticle();
+        viewport.addObject(particlegroup)
+        }
+        viewport.init();
+        </script>
+    </body>
+</html>

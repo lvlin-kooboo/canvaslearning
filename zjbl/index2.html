@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+	html,body{padding: 0;margin: 0;}
+		canvas{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script>
+		window.onload = function() {
+			var canvas = document.getElementById('canvas'),
+				context = canvas.getContext('2d');
+
+			canvas.width = document.documentElement.clientWidth;
+			canvas.height = document.documentElement.clientHeight;
+
+			function Dot(x,y,vx,vy){
+				this.x = x;
+				this.y = y;
+				this.vx = vx;
+				this.vy = vy;
+				this.ox = x;
+				this.oy = y;
+			}
+
+			Dot.prototype={
+				constructor: Dot,
+				paint: function(){
+					context.fillRect(this.x,this.y,5,5);
+					Math.abs(this.ox -this.x) > 20 ? this.vx = this.vx *-1: this.vx = this.vx;
+					Math.abs(this.oy -this.y) > 20 ? this.vy = this.vy *-1: this.vy = this.vy;
+					this.x= this.x + this.vx;
+					this.y = this.y +this.vy;
+				}
+			}
+
+			var d = [];
+			
+			// var d = new Dot(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*2-1,Math.random()*2-1);
+
+			function animate(){
+				for(var i=0; i < 200; i++){
+				// var dot = new Dot(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*2-1,Math.random()*2-1);
+				var dot = new Dot(canvas.width/10+i*20,canvas.height/2+Math.sin(i)*20,1,1);
+				d.length > 500 ? null : d.push(dot);
+			}
+				context.clearRect(0,0,canvas.width,canvas.height);
+				for(var j=0; j < d.length;j++){
+				// 	context.fillRect(d[j].x,d[j].y,10,10);
+				// d[j].x >= canvas.width ? (d[j].vx=d[j].vx*-1) : null;
+				// d[j].y >= canvas.height ? (d[j].vy=d[j].vy*-1) : null;
+				// d[j].x <=0 ? (d[j].vx=d[j].vx*-1) : null;
+				// d[j].y <=0 ? (d[j].vy=d[j].vy*-1) : null;
+				// d[j].x = d[j].x + d[j].vx*9;
+				// d[j].y = d[j].y + d[j].vx*9*Math.tan(Math.PI/180*Math.random()*360);
+					d[j].paint();
+				}
+				
+			}
+			setInterval(animate,33);
+			// setTimeout(animate,33);
+		}
+	</script>
+</body>
+</html>

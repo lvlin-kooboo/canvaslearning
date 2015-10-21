@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>stack</title>
+</head>
+<body>
+	<script>
+		function Record(){
+			this.data = [];
+			this.addScore = addScore;
+			this.average = average;
+		}
+		function addScore(v,n){
+			if(this.data[n-1] == undefined){
+				this.data[n-1] = [];
+			}
+			this.data[n-1].push(v);
+		}
+
+		function average(n){
+			if(n){
+				return this.data[n-1].reduce(function(a,b){return a+b})/this.data[n-1].length;
+			}
+			else{
+				var i, j, v = [];
+				for(i=0; i < this.data.length; i++){
+					var k = 0;
+					for(j=0; j < this.data[i].length; j++){
+						k += this.data[i][j];
+					}
+					v.push(k/this.data[i].length);
+				}
+				return v;
+			}
+		}
+
+		var r = new Record();
+
+		r.addScore(80, 1);
+		r.addScore(90, 1);
+		r.addScore(79, 1);
+		r.addScore(83, 1);
+
+		console.log(r.average(1));
+
+		r.addScore(79, 2);
+		r.addScore(81, 2);
+		r.addScore(82, 2);
+		r.addScore(84, 2);
+		console.log(r.average(2));
+
+		console.log(r.average())
+
+		function List(){
+			this.listSize = 0;
+			this.pos = 0;
+			this.dataStore = [];
+			this.clear = clear;
+			this.find = find;
+			this.toString = toString;
+			this.insert = insert;
+			this.append = append;
+			this.remove = remove;
+			this.front = front;
+			this.end = this.end;
+			this.prev = prev;
+			this.next = next;
+			this.length = length;
+			this.currPos = currPos;
+			this.moveTo = moveTo;
+			this.getElement = getElement;
+			this.contains = contains;
+		}
+
+		function clear(){
+			this.dataStore = [];
+			this.listSize = this.pos = 0;
+		}
+
+		function find(el){
+			var i;
+			for(i=0; i<this.length;i++){
+				if(this.dataStore[i] == el){
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		function append(el){
+			this.dataStore[this.listSize++] = el;
+		}
+
+		function remove(el){
+			if(this.find(el)){
+				var i = this.find(el);
+				this.dataStore.splice(i,1);
+				--this.listSize;
+				return true;
+			}
+			return false;
+		}
+
+		function insert(el,refer){
+			var i = this.find(refer);
+			if(i>-1){
+				this.dataStore.splice(i+1,0,el);
+				this.listSize++;
+				return true;
+			}
+			return false;
+
+		}
+
+		function contains(el){
+			for(var i = 0; i < this.listSize; i++){
+				if(this.dataStore[i] === el){
+					return true;
+				}
+			}
+			return false;
+		}
+
+		function front(){
+			this.pos = 0;
+		}
+
+		function end(){
+			this.pos = this.listSize-1;
+		}
+
+		function prev(){
+			if(this.pos > 0){
+				--this.pos;
+			}
+		}
+
+		function next(){
+			if(this.pos<this.listSize-1){
+				++this.pos;
+			}
+		}
+
+		function currPos(){
+			return this.pos;
+		}
+
+		function getElement(){
+			return this.dataStore[this.pos];
+		}
+
+		function length(){
+			return this.listSize;
+		}
+
+		function toString(){
+			return this.dataStore;
+		}
+
+		function insertLimit(el,refer){
+			if()
+		}
+	</script>
+</body>
+</html>

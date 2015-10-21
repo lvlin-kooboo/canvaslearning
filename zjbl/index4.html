@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+	html,body{padding: 0;margin: 0;}
+		canvas{
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script>
+		window.onload = function() {
+			var canvas = document.getElementById('canvas'),
+				context = canvas.getContext('2d');
+
+			canvas.width = document.documentElement.clientWidth;
+			canvas.height = document.documentElement.clientHeight;
+
+			function Dot(ex,ey,ez,radius,color){
+				this.x = ex;
+				this.y = ey;
+				this.z = ez;
+				this.ex = ex;
+				this.ey = ey;
+				this.ez = ez;
+				this.radius = radius;
+				this.color = color;
+			}
+
+			var img = new Image(),
+				dots = [],baseScale = 250;
+
+
+			img.onload = function(){
+				getImgData();
+				init();
+			}
+
+			img.src = 'img/logo2.png';
+
+			function getImgData(){
+				context.drawImage(img,(canvas.width-img.width)/2,(canvas.height-img.height)/2);
+				var datas = context.getImageData((canvas.width-img.width)/2,(canvas.height-img.height)/2,img.width,img.height);
+
+				for(var i=0; i<img.width; i+=2){
+					for(var j=0; j<img.height; j+=2){
+						var k = (j*datas.width + i)*4;
+						if(datas.data[k+3] >=128){
+							var dot = new Dot(i-3,j-3,0,3,'rgba('+datas.data[k]+','+datas.data[k+1]+','+datas.data[k+2]+','+datas.data[k+3]+')');
+							dots.push(dot);
+						}
+					}
+				}
+
+			}
+
+
+
+			Dot.prototype={
+				constructor: Dot,
+				paint: function(){
+					context.save();
+					context.beginPath();
+					var scale = baseScale/(baseScale+this.z);
+					context.arc(canvas.width/2+(this.x-canvas.width/2)*scale,canvas.height/2+(this.y-canvas.height/2)*scale,this.radius*scale,0,2*Math.PI);
+					context.fillStyle = this.color;
+					context.fill();
+					context.restore();
+				}
+			}
+			function init(){
+				dots.forEach(function(i){
+					i.x = canvas.width*Math.random();
+					i.y = canvas.height*Math.random();
+					i.z = Math.random()*baseScale*2-baseScale;
+
+					i.paint();
+				})
+				animate();
+			}
+			var lastTime = 0;
+
+			function animate(){
+				lastTime = +new Date();
+				context.clearRect(0,0,canvas.width,canvas.height);
+				dots.forEach(function(i){
+					if(Math.abs(i.ex - i.x) > 0.1 && Math.abs(i.ey - i.y) > 0.1 && Math.abs(i.ez - i.z) > 0.1){
+						i.x = i.x + (i.ex - i.x)*0.1;
+						i.y = i.y + (i.ey - i.y)*0.1;
+						i.z = i.z + (i.ez - i.z)*0.1;
+					}
+					else{
+						i.x = i.ex;
+						i.y= i.ey;
+						i.z = i.ez;
+					}
+					i.paint();
+					// window.requestAnimationFrame(animate);
+				})
+				window.requestAnimationFrame(animate);
+			}
+			// setInterval(animate,33);
+		}
+	</script>
+</body>
+</html>
